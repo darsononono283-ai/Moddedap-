@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>APKZone - Download APK</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+:root{
+    --bg:#f5f7fb;
+    --card:#ffffff;
+    --text:#171717;
+    --muted:#737373;
+    --primary:#6c5ce7;
+    --primary2:#8e7cff;
+    --border:#e8e8ef;
+    --shadow:0 10px 35px rgba(30,30,60,.08);
+}
+
+body.dark{
+    --bg:#0d0d13;
+    --card:#171720;
+    --text:#ffffff;
+    --muted:#a5a5b2;
+    --border:#292936;
+    --shadow:0 10px 35px rgba(0,0,0,.35);
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    transition:.3s;
+}
+
+/* HEADER */
+header{
+    position:sticky;
+    top:0;
+    z-index:100;
+    padding:15px 6%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(255,255,255,.8);
+    backdrop-filter:blur(15px);
+    border-bottom:1px solid var(--border);
+}
+
+body.dark header{
+    background:rgba(13,13,19,.8);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.logo span{
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    color:white;
+    padding:8px 10px;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(108,92,231,.3);
+}
+
+.theme-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    cursor:pointer;
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+    font-size:18px;
+}
+
+/* HERO */
+.hero{
+    position:relative;
+    overflow:hidden;
+    margin:25px 6%;
+    padding:55px 25px;
+    text-align:center;
+    border-radius:30px;
+    color:white;
+    background:
+        radial-gradient(circle at 20% 20%,rgba(255,255,255,.18),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(255,255,255,.15),transparent 30%),
+        linear-gradient(135deg,#6c5ce7,#8e7cff,#5f4be7);
+    box-shadow:0 20px 50px rgba(108,92,231,.25);
+}
+
+.hero h1{
+    font-size:clamp(30px,5vw,50px);
+    margin-bottom:12px;
+}
+
+.hero p{
+    opacity:.9;
+    font-size:16px;
+    margin-bottom:28px;
+}
+
+.search-box{
+    max-width:650px;
+    margin:auto;
+    position:relative;
+}
+
+.search-box input{
+    width:100%;
+    padding:17px 20px 17px 50px;
+    border:none;
+    outline:none;
+    border-radius:15px;
+    font-size:15px;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+
+/* SEARCH ICON */
+.search-icon{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#777;
+}
+
+/* CATEGORY */
+.categories{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    padding:5px 6% 20px;
+    scrollbar-width:none;
+}
+
+.categories::-webkit-scrollbar{
+    display:none;
+}
+
+.category{
+    border:none;
+    padding:11px 18px;
+    border-radius:30px;
+    cursor:pointer;
+    white-space:nowrap;
+    background:var(--card);
+    color:var(--text);
+    border:1px solid var(--border);
+    transition:.25s;
+}
+
+.category:hover,
+.category.active{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
+    transform:translateY(-2px);
+}
+
+/* CONTENT */
+.container{
+    padding:10px 6% 50px;
+}
+
+.section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:15px 0 20px;
+}
+
+.section-title h2{
+    font-size:24px;
+}
+
+.result{
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* GRID */
+.app-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:20px;
+}
+
+/* CARD */
+.app-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:20px;
+    box-shadow:var(--shadow);
+    transition:.3s;
+    overflow:hidden;
+}
+
+.app-card:hover{
+    transform:translateY(-7px);
+    box-shadow:0 18px 45px rgba(108,92,231,.15);
+}
+
+.app-top{
+    display:flex;
+    gap:15px;
+    align-items:center;
+}
+
+.app-icon{
+    width:68px;
+    height:68px;
+    border-radius:18px;
+    object-fit:cover;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+}
+
+.app-info{
+    min-width:0;
+    flex:1;
+}
+
+.app-info h3{
+    font-size:18px;
+    margin-bottom:5px;
+}
+
+.app-info p{
+    color:var(--muted);
+    font-size:13px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* BADGE */
+.badge{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:#ff4757;
+    color:white;
+    padding:5px 9px;
+    border-radius:8px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.category-badge{
+    display:inline-block;
+    margin-top:15px;
+    padding:5px 9px;
+    border-radius:8px;
+    background:rgba(108,92,231,.1);
+    color:var(--primary);
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* DETAILS */
+.details{
+    display:flex;
+    justify-content:space-between;
+    margin:18px 0;
+    color:var(--muted);
+    font-size:12px;
+}
+
+.rating{
+    color:#f5a623;
+}
+
+/* DOWNLOAD */
+.download-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    text-decoration:none;
+    background:linear-gradient(135deg,var(--primary),var(--primary2));
+    color:white;
+    padding:13px;
+    border-radius:13px;
+    font-weight:bold;
+    transition:.25s;
+}
+
+.download-btn:hover{
+    transform:scale(1.02);
+    box-shadow:0 8px 20px rgba(108,92,231,.3);
+}
+
+/* EMPTY */
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+}
+
+.empty-icon{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    padding:30px 20px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    header{
+        padding:13px 5%;
+    }
+
+    .logo{
+        font-size:19px;
+    }
+
+    .hero{
+        margin:18px 4%;
+        padding:40px 18px;
+        border-radius:24px;
+    }
+
+    .hero h1{
+        font-size:31px;
+    }
+
+    .container{
+        padding-left:5%;
+        padding-right:5%;
+    }
+
+    .app-grid{
+        grid-template-columns:1fr;
+    }
+
+    .section-title h2{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+    <div class="logo">
+        <span>APK</span>
+        APKZone
+    </div>
+
+    <button class="theme-btn" onclick="toggleDark()" id="themeBtn">
+        🌙
+    </button>
+
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <h1>Download APK Favoritmu</h1>
+
+    <p>
+        Temukan berbagai aplikasi dan game dengan tampilan yang simpel,
+        cepat dan nyaman.
+    </p>
+
+    <div class="search-box">
+
+        <span class="search-icon">🔍</span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Cari aplikasi atau game..."
+            oninput="searchApp()"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- CATEGORY -->
+<div class="categories">
+
+    <button class="category active" onclick="filterCategory('Semua',this)">
+        Semua
+    </button>
+
+    <button class="category" onclick="filterCategory('Editing',this)">
+        🎨 Editing
+    </button>
+
+    <button class="category" onclick="filterCategory('Video',this)">
+        🎬 Video
+    </button>
+
+    <button class="category" onclick="filterCategory('Music',this)">
+        🎵 Music
+    </button>
+
+    <button class="category" onclick="filterCategory('Game',this)">
+        🎮 Game
+    </button>
+
+    <button class="category" onclick="filterCategory('Tools',this)">
+        🛠️ Tools
+    </button>
+
+</div>
+
+
+<!-- CONTENT -->
+<main class="container">
+
+    <div class="section-title">
+
+        <h2>🔥 APK Terbaru</h2>
+
+        <span class="result" id="resultText">
+            0 aplikasi
+        </span>
+
+    </div>
+
+    <div class="app-grid" id="appList"></div>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <p>© 2026 APKZone • All Rights Reserved</p>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   DATA APK
+========================= */
+
+const apps = [
+
+    {
+        name:"CapCut",
+        desc:"Editor video populer dengan berbagai fitur kreatif.",
+        category:"Editing",
+        version:"14.6.0",
+        size:"280 MB",
+        rating:"4.8",
+        icon:"https://cdn-icons-png.flaticon.com/512/1384/1384060.png",
+        download:"#",
+        latest:true
+    },
+
+    {
+        name:"Alight Motion",
+        desc:"Aplikasi motion graphics dan video editing.",
+        category:"Editing",
+        version:"5.0.260",
+        size:"130 MB",
+        rating:"4.7",
+        icon:"https://cdn-icons-png.flaticon.com/512/5968/5968705.png",
+        download:"#",
+        latest:true
+    },
+
+    {
+        name:"Spotify",
+        desc:"Nikmati jutaan lagu dan podcast favorit.",
+        category:"Music",
+        version:"9.0.48",
+        size:"85 MB",
+        rating:"4.6",
+        icon:"https://cdn-icons-png.flaticon.com/512/2111/2111624.png",
+        download:"#",
+        latest:false
+    },
+
+    {
+        name:"VLC",
+        desc:"Pemutar video dan audio dengan dukungan banyak format.",
+        category:"Video",
+        version:"3.6.0",
+        size:"42 MB",
+        rating:"4.5",
+        icon:"https://cdn-icons-png.flaticon.com/512/5968/5968707.png",
+        download:"#",
+        latest:false
+    },
+
+    {
+        name:"Minecraft",
+        desc:"Bangun dunia sendiri dan jelajahi petualangan tanpa batas.",
+        category:"Game",
+        version:"1.21.80",
+        size:"750 MB",
+        rating:"4.9",
+        icon:"https://cdn-icons-png.flaticon.com/512/5968/5968853.png",
+        download:"#",
+        latest:true
+    },
+
+    {
+        name:"Files Manager",
+        desc:"Kelola file, dokumen dan folder dengan mudah.",
+        category:"Tools",
+        version:"4.2.1",
+        size:"18 MB",
+        rating:"4.4",
+        icon:"https://cdn-icons-png.flaticon.com/512/3767/3767084.png",
+        download:"#",
+        latest:false
+    }
+
+];
+
+let currentCategory = "Semua";
+
+
+/* =========================
+   DISPLAY APP
+========================= */
+
+function displayApps(){
+
+    const list = document.getElementById("appList");
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const filtered = apps.filter(app => {
+
+        const categoryMatch =
+            currentCategory === "Semua" ||
+            app.category === currentCategory;
+
+        const searchMatch =
+            app.name.toLowerCase().includes(search) ||
+            app.desc.toLowerCase().includes(search) ||
+            app.category.toLowerCase().includes(search);
+
+        return categoryMatch && searchMatch;
+
+    });
+
+
+    document.getElementById("resultText").textContent =
+        filtered.length + " aplikasi";
+
+
+    if(filtered.length === 0){
+
+        list.innerHTML = `
+            <div class="empty">
+
+                <div class="empty-icon">🔍</div>
+
+                <h3>Aplikasi tidak ditemukan</h3>
+
+                <p>Coba gunakan kata kunci pencarian lainnya.</p>
+
+            </div>
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML = filtered.map(app => `
+
+        <div class="app-card">
+
+            ${
+                app.latest
+                ? `<div class="badge">NEW</div>`
+                : ""
+            }
+
+            <div class="app-top">
+
+                <img
+                    class="app-icon"
+                    src="${app.icon}"
+                    alt="${app.name}"
+                >
+
+                <div class="app-info">
+
+                    <h3>${app.name}</h3>
+
+                    <p>${app.desc}</p>
+
+                </div>
+
+            </div>
+
+
+            <span class="category-badge">
+                ${app.category}
+            </span>
+
+
+            <div class="details">
+
+                <span>📦 ${app.size}</span>
+
+                <span>⚙️ ${app.version}</span>
+
+                <span class="rating">
+                    ⭐ ${app.rating}
+                </span>
+
+            </div>
+
+
+            <a
+                class="download-btn"
+                href="${app.download}"
+                onclick="downloadClick(event,'${app.name}')"
+            >
+                ⬇ Download APK
+            </a>
+
+        </div>
+
+    `).join("");
+
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchApp(){
+
+    displayApps();
+
+}
+
+
+/* =========================
+   CATEGORY
+========================= */
+
+function filterCategory(category,button){
+
+    currentCategory = category;
+
+    document.querySelectorAll(".category")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    displayApps();
+
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+function toggleDark(){
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem("darkMode",dark);
+
+    updateThemeButton();
+
+}
+
+
+function updateThemeButton(){
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    document.getElementById("themeBtn").textContent =
+        dark ? "☀️" : "🌙";
+
+}
+
+
+if(localStorage.getItem("darkMode") === "true"){
+
+    document.body.classList.add("dark");
+
+}
+
+updateThemeButton();
+
+
+/* =========================
+   DOWNLOAD CLICK
+========================= */
+
+function downloadClick(event,name){
+
+    const link = event.currentTarget;
+
+    if(link.getAttribute("href") === "#"){
+
+        event.preventDefault();
+
+        alert(
+            "Link download " +
+            name +
+            " belum dipasang."
+        );
+
+    }
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+displayApps();
+
+</script> src="script.js"></script>
+
+<script src="script.js"></script>
+</body>
+</html>
